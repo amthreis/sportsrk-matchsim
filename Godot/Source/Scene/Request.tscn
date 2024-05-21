@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2k7a7oeaitu0"]
+
+[ext_resource type="Script" path="res://Code/Netcode/MatchDataReceiver.cs" id="1_sfn57"]
+
+[node name="Node" type="Node"]
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+script = ExtResource("1_sfn57")

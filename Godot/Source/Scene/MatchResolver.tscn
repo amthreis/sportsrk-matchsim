@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3vhobgd3y1l"]
+
+[ext_resource type="Script" path="res://Code/Netcode/Server.cs" id="1_h0kpu"]
+
+[node name="Server" type="Node"]
+script = ExtResource("1_h0kpu")

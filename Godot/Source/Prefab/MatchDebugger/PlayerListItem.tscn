@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dew3u6bx8hqos"]
+
+[node name="Item" type="HBoxContainer"]
+
+[node name="KnownAs" type="Label" parent="."]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "player"
+
+[node name="Ptc" type="Label" parent="."]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "ptc"
+horizontal_alignment = 1
+
+[node name="Ovr" type="Label" parent="."]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "ovr"
+horizontal_alignment = 1

@@ -1,0 +1,6 @@
+services:
+  app:
+    image: amthreis/sportsrk-matchmaker:asp-compose
+    build:
+      target: serve
+ 

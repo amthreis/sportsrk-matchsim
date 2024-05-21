@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futzim", "Futzim.csproj", "{2E533E6D-9389-4097-85E4-A2903B79852C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{2E533E6D-9389-4097-85E4-A2903B79852C}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

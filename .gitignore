@@ -1,0 +1,11 @@
+# Godot 4+ specific ignores
+.godot/
+
+.vs/
+bin/
+obj/
+Futzim.csproj.old*
+
+.env*
+
+*.http

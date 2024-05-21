@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      target: dev
+    depends_on:
+      - redis      
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+ 

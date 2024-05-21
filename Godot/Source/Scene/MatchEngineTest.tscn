@@ -1,0 +1,1098 @@
+[gd_scene load_steps=5 format=3 uid="uid://yp7au07sn6wj"]
+
+[ext_resource type="Script" path="res://Code/Debug/MatchDebugger.cs" id="1_2s1tw"]
+[ext_resource type="PackedScene" uid="uid://d31qjat3dtnbw" path="res://Source/Prefab/MatchDebugger/SquadPiece.tscn" id="2_uk0rg"]
+[ext_resource type="PackedScene" uid="uid://dew3u6bx8hqos" path="res://Source/Prefab/MatchDebugger/PlayerListItem.tscn" id="3_642pg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kywu3"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Node" type="Node" node_paths=PackedStringArray("dlCtr", "dlPanel", "squadPiece", "pitch", "playersList", "popup", "eventsCtr")]
+script = ExtResource("1_2s1tw")
+dlCtr = NodePath("HUD/Scroll/Log")
+dlPanel = NodePath("dlPanel")
+squadPiece = NodePath("HUD/Pitch/Players/Home/Piece")
+pitch = NodePath("HUD/Pitch")
+playersList = NodePath("HUD/Players")
+popup = NodePath("HUD/Popup")
+eventsCtr = NodePath("HUD/Events")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Basic" type="Control" parent="HUD"]
+anchors_preset = 0
+
+[node name="Home" type="Label" parent="HUD/Basic"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 38.0
+offset_right = 143.0
+offset_bottom = 61.0
+text = "Home"
+
+[node name="Score" type="Label" parent="HUD/Basic/Home"]
+layout_mode = 0
+offset_left = 94.0
+offset_right = 117.0
+offset_bottom = 23.0
+text = "0"
+horizontal_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/Basic"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 64.0
+offset_right = 53.0
+offset_bottom = 87.0
+text = "Away"
+
+[node name="Score" type="Label" parent="HUD/Basic/Away"]
+layout_mode = 0
+offset_left = 94.0
+offset_right = 117.0
+offset_bottom = 23.0
+text = "0"
+horizontal_alignment = 2
+
+[node name="Time" type="Label" parent="HUD/Basic"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 3.0
+offset_right = 131.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 28
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="Ball" type="ProgressBar" parent="HUD/Basic"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 91.0
+offset_right = 128.0
+offset_bottom = 101.0
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="Controls" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 224.0
+offset_right = 224.0
+
+[node name="Breakpoints" type="Label" parent="HUD/Controls"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 0
+offset_left = 504.0
+offset_top = 19.0
+offset_right = 618.0
+offset_bottom = 42.0
+text = "--breakpoints--"
+horizontal_alignment = 1
+
+[node name="Box" type="VBoxContainer" parent="HUD/Controls/Breakpoints"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_constants/separation = -6
+
+[node name="Goal" type="CheckBox" parent="HUD/Controls/Breakpoints/Box"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "Goal"
+
+[node name="Shot" type="CheckBox" parent="HUD/Controls/Breakpoints/Box"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "Shot"
+
+[node name="ThroughBall" type="CheckBox" parent="HUD/Controls/Breakpoints/Box"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 12
+text = "ThroughBall"
+
+[node name="Play" type="Button" parent="HUD/Controls"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 11.0
+offset_right = 48.0
+offset_bottom = 42.0
+focus_mode = 0
+text = ">"
+
+[node name="PlayOnce" type="Button" parent="HUD/Controls"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 11.0
+offset_right = 85.0
+offset_bottom = 42.0
+focus_mode = 0
+text = "|>"
+
+[node name="STATS" type="Label" parent="HUD"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 0
+offset_left = 58.0
+offset_top = 112.0
+offset_right = 148.0
+offset_bottom = 135.0
+text = "--stats--"
+horizontal_alignment = 1
+
+[node name="TeamStats" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 152.0
+offset_right = 105.0
+offset_bottom = 182.0
+theme_override_constants/separation = 30
+
+[node name="Possession" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Possession"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Possession"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Possession"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -18.0
+offset_right = -42.0
+offset_bottom = 5.0
+theme_override_font_sizes/font_size = 14
+text = "0%"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Possession"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = -18.0
+offset_right = 87.0
+offset_bottom = 5.0
+theme_override_font_sizes/font_size = 14
+text = "0%"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Possession"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="Passes" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Passes"]
+editor_description = "dwerf wer"
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -88.0
+offset_top = -18.0
+offset_right = 88.0
+offset_bottom = 5.0
+tooltip_text = "dawdaw"
+mouse_filter = 1
+text = "Passes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Passes"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0 (0%)"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Passes"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0 (0%)"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Passes"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="Shots" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Shots"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Shots"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Shots"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Shots"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Shots"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="Blocks" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Blocks"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Blocks"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Blocks"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Blocks"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Blocks"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="GKSaves" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/GKSaves"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "GKSaves"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/GKSaves"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/GKSaves"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/GKSaves"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="Cleared" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Cleared"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Cleared"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Cleared"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Cleared"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Cleared"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="Dribbles" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Dribbles"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Dribbles"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Dribbles"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Dribbles"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Dribbles"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="Fouls" type="Control" parent="HUD/TeamStats"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/TeamStats/Fouls"]
+self_modulate = Color(0.486275, 0.486275, 0.486275, 1)
+layout_mode = 0
+offset_left = -60.0
+offset_top = -18.0
+offset_right = 60.0
+offset_bottom = 5.0
+text = "Fouls"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Home" type="Label" parent="HUD/TeamStats/Fouls"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+vertical_alignment = 2
+
+[node name="Away" type="Label" parent="HUD/TeamStats/Fouls"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -20.0
+offset_right = 87.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 12
+text = "0
+"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Bar" type="ProgressBar" parent="HUD/TeamStats/Fouls"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 8.0
+max_value = 1.0
+show_percentage = false
+
+[node name="LOG" type="Label" parent="HUD"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 2
+offset_left = 827.0
+offset_top = 19.0
+offset_right = 926.0
+offset_bottom = 42.0
+text = "--log--"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -297.0
+offset_top = 51.0
+offset_right = -17.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Log" type="VBoxContainer" parent="HUD/Scroll"]
+layout_mode = 2
+
+[node name="Actions" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 13.0
+offset_right = 320.0
+offset_bottom = 13.0
+metadata/_edit_group_ = true
+
+[node name="Restart" type="Button" parent="HUD/Actions"]
+layout_mode = 0
+offset_right = 27.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 14
+text = "R"
+
+[node name="End" type="Button" parent="HUD/Actions"]
+layout_mode = 0
+offset_left = 33.0
+offset_right = 60.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 14
+text = "E"
+
+[node name="100x" type="Button" parent="HUD/Actions"]
+layout_mode = 0
+offset_left = 66.0
+offset_right = 117.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 14
+text = "100x"
+
+[node name="Pitch" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 12.0
+offset_top = 491.0
+offset_right = 322.0
+offset_bottom = 630.0
+
+[node name="BG" type="Control" parent="HUD/Pitch"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Extents" type="ColorRect" parent="HUD/Pitch/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.34902, 0.196078, 1)
+
+[node name="Lines" type="Control" parent="HUD/Pitch/BG/Extents"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="0" type="ColorRect" parent="HUD/Pitch/BG/Extents/Lines"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.721569, 0.721569, 0.721569, 1)
+
+[node name="Players" type="Control" parent="HUD/Pitch"]
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="Home" type="Control" parent="HUD/Pitch/Players"]
+anchors_preset = 0
+
+[node name="Piece" parent="HUD/Pitch/Players/Home" instance=ExtResource("2_uk0rg")]
+visible = false
+layout_mode = 0
+offset_left = 123.0
+offset_top = 61.0
+offset_right = 139.0
+offset_bottom = 77.0
+
+[node name="Players" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 241.0
+offset_top = 80.0
+offset_right = 241.0
+offset_bottom = 80.0
+
+[node name="Title" type="Label" parent="HUD/Players"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 2
+offset_right = 114.0
+offset_bottom = 23.0
+text = "--players--"
+horizontal_alignment = 1
+
+[node name="Home" type="Control" parent="HUD/Players"]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 29.0
+offset_right = 16.0
+offset_bottom = 29.0
+
+[node name="KnownAs" type="Label" parent="HUD/Players/Home"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 2
+offset_top = 23.0
+offset_right = 71.0
+offset_bottom = 46.0
+text = "crf"
+
+[node name="Box" type="VBoxContainer" parent="HUD/Players/Home"]
+layout_mode = 0
+offset_top = 49.0
+offset_right = 194.0
+offset_bottom = 72.0
+
+[node name="Header" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+modulate = Color(1, 0.462745, 1, 1)
+layout_mode = 2
+
+[node name="0" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="1" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="2" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="3" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="4" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="5" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="6" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="7" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="8" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="9" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="10" parent="HUD/Players/Home/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="Attrib" type="Control" parent="HUD/Players/Home"]
+anchors_preset = 0
+offset_left = 3.0
+offset_top = 320.0
+offset_right = 3.0
+offset_bottom = 320.0
+
+[node name="Grid" type="GridContainer" parent="HUD/Players/Home/Attrib"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 25
+columns = 3
+
+[node name="Dri" type="Control" parent="HUD/Players/Home/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Home/Attrib/Grid/Dri"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "dri"
+
+[node name="Value" type="Label" parent="HUD/Players/Home/Attrib/Grid/Dri"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Pas" type="Control" parent="HUD/Players/Home/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Home/Attrib/Grid/Pas"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "pas
+"
+
+[node name="Value" type="Label" parent="HUD/Players/Home/Attrib/Grid/Pas"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Pac" type="Control" parent="HUD/Players/Home/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Home/Attrib/Grid/Pac"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "pac"
+
+[node name="Value" type="Label" parent="HUD/Players/Home/Attrib/Grid/Pac"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Away" type="Control" parent="HUD/Players"]
+anchors_preset = 0
+offset_left = 244.0
+offset_top = 29.0
+offset_right = 244.0
+offset_bottom = 29.0
+
+[node name="KnownAs" type="Label" parent="HUD/Players/Away"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 2
+offset_top = 23.0
+offset_right = 71.0
+offset_bottom = 46.0
+text = "crf"
+
+[node name="Box" type="VBoxContainer" parent="HUD/Players/Away"]
+layout_mode = 0
+offset_top = 49.0
+offset_right = 194.0
+offset_bottom = 72.0
+
+[node name="Header" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+modulate = Color(1, 0.462745, 1, 1)
+layout_mode = 2
+
+[node name="0" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="1" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="2" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="3" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="4" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="5" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="6" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="7" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="8" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+
+[node name="9" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="10" parent="HUD/Players/Away/Box" instance=ExtResource("3_642pg")]
+layout_mode = 2
+
+[node name="Attrib" type="Control" parent="HUD/Players/Away"]
+anchors_preset = 0
+offset_top = 320.0
+offset_bottom = 320.0
+
+[node name="Grid" type="GridContainer" parent="HUD/Players/Away/Attrib"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 25
+columns = 3
+
+[node name="Dri" type="Control" parent="HUD/Players/Away/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Away/Attrib/Grid/Dri"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "dri"
+
+[node name="Value" type="Label" parent="HUD/Players/Away/Attrib/Grid/Dri"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Pas" type="Control" parent="HUD/Players/Away/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Away/Attrib/Grid/Pas"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "pas
+"
+
+[node name="Value" type="Label" parent="HUD/Players/Away/Attrib/Grid/Pas"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Pac" type="Control" parent="HUD/Players/Away/Attrib/Grid"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Players/Away/Attrib/Grid/Pac"]
+self_modulate = Color(1, 0.458824, 1, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "pac"
+
+[node name="Value" type="Label" parent="HUD/Players/Away/Attrib/Grid/Pac"]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 59.0
+offset_bottom = 17.0
+theme_override_font_sizes/font_size = 12
+text = "80.0"
+
+[node name="Popup" type="PanelContainer" parent="HUD"]
+z_index = 5
+layout_mode = 0
+offset_left = 483.0
+offset_top = 454.0
+offset_right = 635.0
+offset_bottom = 521.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kywu3")
+
+[node name="Box" type="VBoxContainer" parent="HUD/Popup"]
+layout_mode = 2
+
+[node name="Goals" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Goals"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "GOALS: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Goals"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Passes" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Passes"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Passes: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Passes"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Tackles" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Tackles"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Tackles: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Tackles"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Interceptions" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Interceptions"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Interceptions: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Interceptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Shots" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Shots"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Shots: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Shots"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Aerials" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Aerials"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Aerials: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Aerials"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Dribbles" type="HBoxContainer" parent="HUD/Popup/Box"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="HUD/Popup/Box/Dribbles"]
+self_modulate = Color(0.541176, 0.541176, 0.541176, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Dribbles: "
+
+[node name="Value" type="Label" parent="HUD/Popup/Box/Dribbles"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "100 (85%)"
+
+[node name="Events" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 687.0
+offset_top = 459.0
+offset_right = 687.0
+offset_bottom = 459.0
+
+[node name="Title" type="Label" parent="HUD/Events"]
+self_modulate = Color(1, 0.580392, 1, 1)
+layout_mode = 0
+offset_left = -93.0
+offset_right = 21.0
+offset_bottom = 23.0
+text = "--events--"
+horizontal_alignment = 1
+
+[node name="Box" type="VBoxContainer" parent="HUD/Events"]
+layout_mode = 0
+offset_left = -71.0
+offset_top = 35.0
+offset_right = -71.0
+offset_bottom = 35.0
+
+[node name="dlPanel" type="Control" parent="."]
+custom_minimum_size = Vector2(280, 20)
+layout_mode = 3
+anchors_preset = 0
+offset_top = -20.0
+offset_right = 280.0
+
+[node name="Title" type="Label" parent="dlPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -8.0
+offset_right = 199.0
+offset_bottom = 15.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Home"
+
+[node name="Weight" type="Label" parent="dlPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -272.0
+offset_top = -8.0
+offset_right = -7.0
+offset_bottom = 9.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Home"
+horizontal_alignment = 2
