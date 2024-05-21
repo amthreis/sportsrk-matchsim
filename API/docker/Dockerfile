@@ -11,7 +11,7 @@ CMD dotnet run --no-launch-profile
 
 FROM pre AS build
 
-RUN dotnet publish SRkMatchmakerAPI.csproj -c release -o /app/Dist -r linux-x64 --self-contained # -p:PublishTrimmed=true
+RUN dotnet publish SRkMatchSimAPI.csproj -c release -o /app/Dist -r linux-x64 --self-contained # -p:PublishTrimmed=true
 
 FROM ubuntu AS serve
 
@@ -25,4 +25,4 @@ EXPOSE ${PORT}
 
 #ENTRYPOINT dotnet WebApiTut.dll
 
-ENTRYPOINT ./SRkMatchmakerAPI
+ENTRYPOINT ./SRkMatchSimAPI
